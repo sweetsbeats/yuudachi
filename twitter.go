@@ -62,7 +62,7 @@ func embedImages(s *discordgo.Session, m *discordgo.MessageCreate, link string) 
 		// Check if it has more than one image
 		imageCount := 0
 		msgResp := ""
-		for index, elem := range tweet.Entities.Media {
+		for index, elem := range tweet.ExtendedEntities.Media {
 			if elem.Type == "photo" {
 				imageCount = imageCount + 1
 			}
@@ -73,7 +73,9 @@ func embedImages(s *discordgo.Session, m *discordgo.MessageCreate, link string) 
 		// If so, post them!
 		if imageCount > 1 {
 			ChannelMessageSendDeleteAble(s, m, msgResp)
+			return
 		}
+		log.Printf("%+v\n", tweet)
 	}
 }
 
